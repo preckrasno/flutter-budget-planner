@@ -12,10 +12,15 @@ class MainInitial extends MainState {
   List<Object> get props => [];
 }
 
+class MainLoadingState extends MainState {
+  @override
+  List<Object> get props => [];
+}
+
 class MainCalculatedState extends MainState {
-  final int perDaySum;
-  const MainCalculatedState(this.perDaySum);
+  final BudgetModel budgetModel;
+  const MainCalculatedState(this.budgetModel);
 
   @override
-  List<Object> get props => [perDaySum];
+  List<Object> get props => [budgetModel];
 }

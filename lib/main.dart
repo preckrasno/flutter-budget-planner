@@ -1,8 +1,10 @@
-import 'package:budget_planner2/ui/pages/main_page.dart';
+import 'package:budget_planner2/data/injection/injection_module.dart';
 import 'package:budget_planner2/ui/pages/main_parent_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_simple_dependency_injection/injector.dart';
 
 void main() {
+  InjectionModule().initialize(Injector());
   runApp(const MyApp());
 }
 
@@ -11,7 +13,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: MainParentPage(),
     );
   }
