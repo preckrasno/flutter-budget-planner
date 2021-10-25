@@ -1,15 +1,18 @@
 import 'package:budget_planner2/data/date_time_extensions.dart';
 import 'package:budget_planner2/data/models/budget_model.dart';
+import 'package:budget_planner2/data/models/expense_model.dart';
 import 'package:flutter/material.dart';
 
 class MainPageWidget extends StatelessWidget {
-  final Function(DateTime) onDateChose;
-  final Function(int) onExpenseEnter;
-  final Function(int) onTotalSumEnter;
+  final void Function(DateTime) onDateChose;
+  final void Function(ExpenseModel) onExpenseEnter;
+  final void Function(int) onTotalSumEnter;
   final TextEditingController expenseController;
   final TextEditingController totalSumController;
   final DateTime todayDate = DateTime.now();
   final BudgetModel budgetModel;
+
+  late DateTime expenseDate;
 
   MainPageWidget({
     required this.onDateChose,
@@ -25,76 +28,120 @@ class MainPageWidget extends StatelessWidget {
     return budgetModelDate.isOlderThan(todayDate) ? budgetModelDate : todayDate;
   }
 
-  _selectDate(BuildContext context) async {
+  _selectExpenseDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: _getInitialDate(budgetModel.endDate),
+      initialDate: _getInitialDate(budgetModel.budgetEndDate),
       firstDate: todayDate,
       lastDate: DateTime(2025),
     );
-    if (picked != null && picked != budgetModel.endDate) {
+    if (picked != null && picked != budgetModel.budgetEndDate) {
+      expenseDate = picked;
+    }
+  }
+
+  _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _getInitialDate(budgetModel.budgetEndDate),
+      firstDate: todayDate,
+      lastDate: DateTime(2025),
+    );
+    if (picked != null && picked != budgetModel.budgetEndDate) {
       onDateChose(picked);
     }
+  }
+
+  String _getPerDaySum() {
+    int days = budgetModel.getLeftDays();
+    int perDayBudget = budgetModel.initialBudgetSum ~/ days;
+    int totalDayExpenses = 0;
+    for (ExpenseModel expense in budgetModel.expensesList.where(
+      (element) => element.expenseDate.isSameDate(
+        DateTime.now(),
+      ),
+    )) {
+      totalDayExpenses += expense.expenseSum;
+    }
+    int perDayLeft = perDayBudget - totalDayExpenses;
+    return '$perDayLeft left out of $perDayBudget UAH';
+  }
+
+  _getCalculatedBudget() {
+    int days = budgetModel.getLeftDays();
+    int perDayBudget = budgetModel.initialBudgetSum ~/ days;
+    int totalExpenses = 0;
+    for (ExpenseModel expense in budgetModel.expensesList) {
+      totalExpenses += expense.expenseSum;
+    }
+    return (budgetModel.initialBudgetSum - totalExpenses).toString();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home'),
+        title: const Text('Home'),
         centerTitle: true,
       ),
       body: Center(
         child: Column(
           children: [
-            Spacer(),
+            const Spacer(),
+            Text(
+              _getPerDaySum(),
+              style: const TextStyle(fontSize: 16),
+            ),
+            const Spacer(),
             Column(
               children: [
-                Text('${budgetModel.perDaySum ?? ''} UAH'),
-                Text('Per Day'),
-              ],
-            ),
-            Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                  width: 150,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: expenseController,
-                  ),
-                ),
                 ElevatedButton(
-                  onPressed: () => onExpenseEnter(
-                    int.parse(
-                      expenseController.text,
+                  onPressed: () => _selectExpenseDate(context),
+                  child: const Text('Expense Date'),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    SizedBox(
+                      width: 150,
+                      child: TextField(
+                        keyboardType: TextInputType.number,
+                        controller: expenseController,
+                      ),
                     ),
-                  ),
-                  child: Text('Spent'),
-                )
+                    ElevatedButton(
+                      onPressed: () => onExpenseEnter(ExpenseModel(
+                        expenseDate: expenseDate,
+                        expenseSum: int.parse(
+                          expenseController.text,
+                        ),
+                      )),
+                      child: const Text('Spent'),
+                    )
+                  ],
+                ),
               ],
             ),
-            Spacer(),
-            Divider(),
+            const Spacer(),
+            const Divider(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Text('${budgetModel.endDate}'),
+                Text('${budgetModel.budgetEndDate}'),
                 ElevatedButton(
                   onPressed: () => _selectDate(context),
-                  child: Text('Select end date'),
+                  child: const Text('Select End Date'),
                 ),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
+                SizedBox(
                   width: 150,
                   child: TextField(
                     decoration: InputDecoration(
-                      hintText: budgetModel.totalSum.toString(),
+                      hintText: _getCalculatedBudget(),
                     ),
                     keyboardType: TextInputType.number,
                     controller: totalSumController,
@@ -106,11 +153,11 @@ class MainPageWidget extends StatelessWidget {
                       totalSumController.text,
                     ),
                   ),
-                  child: Text('Total Sum'),
+                  child: const Text('Total Sum'),
                 ),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
           ],

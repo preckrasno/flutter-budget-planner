@@ -21,7 +21,7 @@ class MainDatePickedEvent extends MainEvent {
 }
 
 class MainExpensesEnteredEvent extends MainEvent {
-  final int expense;
+  final ExpenseModel expense;
   const MainExpensesEnteredEvent(this.expense);
 
   @override

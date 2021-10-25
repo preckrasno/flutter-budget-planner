@@ -1,4 +1,5 @@
 import 'package:budget_planner2/bloc/main_bloc/main_bloc.dart';
+import 'package:budget_planner2/data/models/expense_model.dart';
 import 'package:budget_planner2/ui/pages/widgets/main_page_widget.dart';
 import 'package:budget_planner2/ui/pages/widgets/select_date_sum_widget.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +54,7 @@ class MainPage extends StatelessWidget {
 
   _addedExpense(
     MainBloc bloc,
-    int expense,
+    ExpenseModel expense,
   ) {
     bloc.add(MainExpensesEnteredEvent(expense));
   }
