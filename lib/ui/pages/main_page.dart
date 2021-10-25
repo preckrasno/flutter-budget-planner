@@ -1,11 +1,11 @@
 import 'package:budget_planner2/bloc/main_bloc/main_bloc.dart';
 import 'package:budget_planner2/ui/pages/widgets/main_page_widget.dart';
+import 'package:budget_planner2/ui/pages/widgets/select_date_sum_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MainPage extends StatelessWidget {
   MainPage({Key? key}) : super(key: key);
-  int? perDaySum;
 
   TextEditingController expenseController = TextEditingController();
   TextEditingController totalSumController = TextEditingController();
@@ -16,19 +16,32 @@ class MainPage extends StatelessWidget {
 
     return BlocBuilder<MainBloc, MainState>(
       builder: (context, state) {
-        if (state is MainCalculatedState) {
-          perDaySum = state.perDaySum;
+        if (state is MainInitial) {
+          return SelectDateSumWidget(
+              onSubmit: (value) => _submitBudget(mainBloc, value),
+              totalSumController: totalSumController);
         }
-        return MainPageWidget(
-          onDateChose: (value) => _addedEndDate(mainBloc, value),
-          onExpenseEnter: (value) => _addedExpense(mainBloc, value),
-          onTotalSumEnter: (value) => _enteredTotalDeposit(mainBloc, value),
-          perDaySum: perDaySum,
-          expenseController: expenseController,
-          totalSumController: totalSumController,
-        );
+        if (state is MainLoadingState) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+        if (state is MainCalculatedState) {
+          return MainPageWidget(
+              onDateChose: (value) => _addedEndDate(mainBloc, value),
+              onExpenseEnter: (value) => _addedExpense(mainBloc, value),
+              onTotalSumEnter: (value) => _enteredTotalSum(mainBloc, value),
+              budgetModel: state.budgetModel,
+              expenseController: expenseController,
+              totalSumController: totalSumController);
+        }
+        throw ArgumentError('MainState not expected');
       },
     );
+  }
+
+  _submitBudget(bloc, budgetModel) {
+    bloc.add(MainSubmitEvent(budgetModel));
   }
 
   _addedEndDate(
@@ -45,7 +58,7 @@ class MainPage extends StatelessWidget {
     bloc.add(MainExpensesEnteredEvent(expense));
   }
 
-  _enteredTotalDeposit(
+  _enteredTotalSum(
     MainBloc bloc,
     int totalSum,
   ) {

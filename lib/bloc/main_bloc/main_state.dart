@@ -1,21 +1,14 @@
 part of 'main_bloc.dart';
 
-abstract class MainState extends Equatable {
+abstract class MainState {
   const MainState();
-
-  @override
-  List<Object> get props => [];
 }
 
-class MainInitial extends MainState {
-  @override
-  List<Object> get props => [];
-}
+class MainInitial extends MainState {}
+
+class MainLoadingState extends MainState {}
 
 class MainCalculatedState extends MainState {
-  final int perDaySum;
-  const MainCalculatedState(this.perDaySum);
-
-  @override
-  List<Object> get props => [perDaySum];
+  final BudgetModel budgetModel;
+  const MainCalculatedState(this.budgetModel);
 }

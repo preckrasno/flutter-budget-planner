@@ -1,32 +1,38 @@
+import 'package:budget_planner2/data/date_time_extensions.dart';
+import 'package:budget_planner2/data/models/budget_model.dart';
 import 'package:flutter/material.dart';
 
 class MainPageWidget extends StatelessWidget {
   final Function(DateTime) onDateChose;
   final Function(int) onExpenseEnter;
   final Function(int) onTotalSumEnter;
-  final int? perDaySum;
   final TextEditingController expenseController;
   final TextEditingController totalSumController;
-  final DateTime selectedDate = DateTime.now();
+  final DateTime todayDate = DateTime.now();
+  final BudgetModel budgetModel;
 
   MainPageWidget({
     required this.onDateChose,
     required this.onExpenseEnter,
     required this.onTotalSumEnter,
-    this.perDaySum,
+    required this.budgetModel,
     required this.expenseController,
     required this.totalSumController,
     Key? key,
   }) : super(key: key);
 
+  DateTime _getInitialDate(DateTime budgetModelDate) {
+    return budgetModelDate.isOlderThan(todayDate) ? budgetModelDate : todayDate;
+  }
+
   _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDate,
-      firstDate: selectedDate,
+      initialDate: _getInitialDate(budgetModel.endDate),
+      firstDate: todayDate,
       lastDate: DateTime(2025),
     );
-    if (picked != null && picked != selectedDate) {
+    if (picked != null && picked != budgetModel.endDate) {
       onDateChose(picked);
     }
   }
@@ -44,7 +50,7 @@ class MainPageWidget extends StatelessWidget {
             Spacer(),
             Column(
               children: [
-                Text('$perDaySum UAH'),
+                Text('${budgetModel.perDaySum ?? ''} UAH'),
                 Text('Per Day'),
               ],
             ),
@@ -70,12 +76,19 @@ class MainPageWidget extends StatelessWidget {
               ],
             ),
             Spacer(),
-            ElevatedButton(
-              onPressed: () => _selectDate(context),
-              child: Text('Select end date'),
+            Divider(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Text('${budgetModel.endDate}'),
+                ElevatedButton(
+                  onPressed: () => _selectDate(context),
+                  child: Text('Select end date'),
+                ),
+              ],
             ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
                   width: 150,
@@ -90,9 +103,12 @@ class MainPageWidget extends StatelessWidget {
                       totalSumController.text,
                     ),
                   ),
-                  child: Text('Total sum'),
-                )
+                  child: Text('Total Sum'),
+                ),
               ],
+            ),
+            SizedBox(
+              height: 20,
             ),
           ],
         ),
