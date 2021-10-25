@@ -30,47 +30,52 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     }
   }
 
-  void _onMainTotalSumEnteredEvent(
-      MainTotalSumEnteredEvent event, Emitter<MainState> emit) {
+  Future<void> _onMainTotalSumEnteredEvent(
+      MainTotalSumEnteredEvent event, Emitter<MainState> emit) async {
     if (budgetModel != null) {
       budgetModel!.totalSum = event.totalSum;
       budgetModel!.perDaySum =
           budgetModel!.totalSum ~/ budgetModel!.getLeftDays();
-      _budgetStorage.saveBudgetItems(budgetModel!);
+      await _budgetStorage.saveBudgetItems(budgetModel!);
       emit(MainCalculatedState(budgetModel!));
     } else {
       emit(MainInitial());
     }
   }
 
-  void _onMainDatePickedEvent(
-      MainDatePickedEvent event, Emitter<MainState> emit) {
+  Future<void> _onMainDatePickedEvent(
+      MainDatePickedEvent event, Emitter<MainState> emit) async {
     if (budgetModel != null) {
       budgetModel!.endDate = event.endDate;
       budgetModel!.perDaySum =
           budgetModel!.totalSum ~/ budgetModel!.getLeftDays();
-      _budgetStorage.saveBudgetItems(budgetModel!);
+      await _budgetStorage.saveBudgetItems(budgetModel!);
       emit(MainCalculatedState(budgetModel!));
     } else {
       emit(MainInitial());
     }
   }
 
-  void _onMainSubmitEvent(MainSubmitEvent event, Emitter<MainState> emit) {
-    budgetModel = BudgetModel(
-        totalSum: event.budgetModel.totalSum,
-        endDate: event.budgetModel.endDate);
-    budgetModel!.perDaySum =
-        budgetModel!.totalSum ~/ budgetModel!.getLeftDays();
+  Future<void> _onMainSubmitEvent(
+      MainSubmitEvent event, Emitter<MainState> emit) async {
+    event.budgetModel.perDaySum =
+        event.budgetModel.totalSum ~/ event.budgetModel.getLeftDays();
+    budgetModel = event.budgetModel;
 
-    _budgetStorage.saveBudgetItems(budgetModel!);
+    await _budgetStorage.saveBudgetItems(budgetModel!);
     emit(MainCalculatedState(budgetModel!));
   }
 
-  void _onMainExpensesEnteredEvent(
-      MainExpensesEnteredEvent event, Emitter<MainState> emit) {}
-
-  _calculateBudget({endDate, totalSum = 0, expense}) {
-    DateTime date = endDate ?? DateTime.now();
+  Future<void> _onMainExpensesEnteredEvent(
+      MainExpensesEnteredEvent event, Emitter<MainState> emit) async {
+    if (budgetModel != null) {
+      budgetModel!.totalSum = budgetModel!.totalSum - event.expense;
+      budgetModel!.perDaySum =
+          budgetModel!.totalSum ~/ budgetModel!.getLeftDays();
+      await _budgetStorage.saveBudgetItems(budgetModel!);
+      emit(MainCalculatedState(budgetModel!));
+    } else {
+      emit(MainInitial());
+    }
   }
 }

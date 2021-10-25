@@ -1,3 +1,4 @@
+import 'package:budget_planner2/data/date_time_extensions.dart';
 import 'package:budget_planner2/data/models/budget_model.dart';
 import 'package:flutter/material.dart';
 
@@ -20,10 +21,14 @@ class MainPageWidget extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
+  DateTime _getInitialDate(DateTime budgetModelDate) {
+    return budgetModelDate.isOlderThan(todayDate) ? budgetModelDate : todayDate;
+  }
+
   _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: budgetModel.endDate,
+      initialDate: _getInitialDate(budgetModel.endDate),
       firstDate: todayDate,
       lastDate: DateTime(2025),
     );

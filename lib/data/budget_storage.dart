@@ -2,7 +2,7 @@ import 'package:budget_planner2/data/models/budget_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BudgetStorage {
-  saveBudgetItems(BudgetModel budgetModel) async {
+  Future<void> saveBudgetItems(BudgetModel budgetModel) async {
     final prefs = await SharedPreferences.getInstance();
 
     final String encodedData = BudgetModel.encode(budgetModel);
