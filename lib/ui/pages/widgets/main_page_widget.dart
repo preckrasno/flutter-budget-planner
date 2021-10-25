@@ -93,6 +93,9 @@ class MainPageWidget extends StatelessWidget {
                 Container(
                   width: 150,
                   child: TextField(
+                    decoration: InputDecoration(
+                      hintText: budgetModel.totalSum.toString(),
+                    ),
                     keyboardType: TextInputType.number,
                     controller: totalSumController,
                   ),
