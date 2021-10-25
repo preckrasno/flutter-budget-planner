@@ -1,10 +1,10 @@
-import 'package:budget_planner2/data/budget_storage.dart';
+import 'package:budget_planner2/data/repositories/budget/budget_repository_implementation.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 
 class InjectionModule {
   Injector initialize(Injector injector) {
-    injector.map<BudgetStorage>(
-      (injector) => BudgetStorage(),
+    injector.map<BudgetRepositoryImplementation>(
+      (injector) => BudgetRepositoryImplementation(),
       isSingleton: true,
     );
 
