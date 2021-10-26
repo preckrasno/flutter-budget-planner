@@ -29,7 +29,8 @@ class MainPage extends StatelessWidget {
         }
         if (state is MainCalculatedState) {
           return MainPageWidget(
-              onDateChose: (value) => _addedEndDate(mainBloc, value),
+              onEndDateChose: (value) => _addedEndDate(mainBloc, value),
+              onStartDateChose: (value) => _addedStartDate(mainBloc, value),
               onExpenseEnter: (value) => _addedExpense(mainBloc, value),
               onTotalSumEnter: (value) => _enteredTotalSum(mainBloc, value),
               budgetModel: state.budgetModel,
@@ -49,7 +50,14 @@ class MainPage extends StatelessWidget {
     MainBloc bloc,
     DateTime date,
   ) {
-    bloc.add(MainDatePickedEvent(date));
+    bloc.add(MainEndDatePickedEvent(date));
+  }
+
+  _addedStartDate(
+    MainBloc bloc,
+    DateTime date,
+  ) {
+    bloc.add(MainStartDatePickedEvent(date));
   }
 
   _addedExpense(

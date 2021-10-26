@@ -12,12 +12,20 @@ class MainLoadingBudgetEvent extends MainEvent {
   List<Object> get props => [];
 }
 
-class MainDatePickedEvent extends MainEvent {
+class MainEndDatePickedEvent extends MainEvent {
   final DateTime endDate;
-  const MainDatePickedEvent(this.endDate);
+  const MainEndDatePickedEvent(this.endDate);
 
   @override
   List<Object> get props => [endDate];
+}
+
+class MainStartDatePickedEvent extends MainEvent {
+  final DateTime startDate;
+  const MainStartDatePickedEvent(this.startDate);
+
+  @override
+  List<Object> get props => [startDate];
 }
 
 class MainExpensesEnteredEvent extends MainEvent {

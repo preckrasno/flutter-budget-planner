@@ -16,7 +16,8 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     this._budgetRepositoryImplementation,
   ) : super(MainLoadingState()) {
     on<MainLoadingBudgetEvent>(_onMainLoadingBudgetEvent);
-    on<MainDatePickedEvent>(_onMainDatePickedEvent);
+    on<MainEndDatePickedEvent>(_onMainEndDatePickedEvent);
+    on<MainStartDatePickedEvent>(_onMainStartDatePickedEvent);
     on<MainExpensesEnteredEvent>(_onMainExpensesEnteredEvent);
     on<MainSubmitEvent>(_onMainSubmitEvent);
     on<MainTotalSumEnteredEvent>(_onMainTotalSumEnteredEvent);
@@ -44,10 +45,21 @@ class MainBloc extends Bloc<MainEvent, MainState> {
     }
   }
 
-  Future<void> _onMainDatePickedEvent(
-      MainDatePickedEvent event, Emitter<MainState> emit) async {
+  Future<void> _onMainEndDatePickedEvent(
+      MainEndDatePickedEvent event, Emitter<MainState> emit) async {
     if (budgetModel != null) {
       budgetModel!.budgetEndDate = event.endDate;
+      await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel!);
+      emit(MainCalculatedState(budgetModel!));
+    } else {
+      emit(MainInitial());
+    }
+  }
+
+  Future<void> _onMainStartDatePickedEvent(
+      MainStartDatePickedEvent event, Emitter<MainState> emit) async {
+    if (budgetModel != null) {
+      budgetModel!.budgetStartDate = event.startDate;
       await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel!);
       emit(MainCalculatedState(budgetModel!));
     } else {

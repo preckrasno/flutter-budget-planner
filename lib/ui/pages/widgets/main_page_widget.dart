@@ -4,7 +4,8 @@ import 'package:budget_planner2/data/models/expense_model.dart';
 import 'package:flutter/material.dart';
 
 class MainPageWidget extends StatelessWidget {
-  final void Function(DateTime) onDateChose;
+  final void Function(DateTime) onEndDateChose;
+  final void Function(DateTime) onStartDateChose;
   final void Function(ExpenseModel) onExpenseEnter;
   final void Function(int) onTotalSumEnter;
   final TextEditingController expenseController;
@@ -15,7 +16,8 @@ class MainPageWidget extends StatelessWidget {
   late DateTime expenseDate;
 
   MainPageWidget({
-    required this.onDateChose,
+    required this.onEndDateChose,
+    required this.onStartDateChose,
     required this.onExpenseEnter,
     required this.onTotalSumEnter,
     required this.budgetModel,
@@ -40,15 +42,27 @@ class MainPageWidget extends StatelessWidget {
     }
   }
 
-  _selectDate(BuildContext context) async {
+  _selectEndDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: _getInitialDate(budgetModel.budgetEndDate),
-      firstDate: todayDate,
-      lastDate: DateTime(2025),
+      firstDate: DateTime(todayDate.year),
+      lastDate: DateTime(todayDate.year + 2),
     );
     if (picked != null && picked != budgetModel.budgetEndDate) {
-      onDateChose(picked);
+      onEndDateChose(picked);
+    }
+  }
+
+  _selectStartDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: _getInitialDate(budgetModel.budgetStartDate),
+      firstDate: DateTime(todayDate.year),
+      lastDate: DateTime(todayDate.year + 2),
+    );
+    if (picked != null && picked != budgetModel.budgetEndDate) {
+      onStartDateChose(picked);
     }
   }
 
@@ -127,9 +141,19 @@ class MainPageWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                Text('${budgetModel.budgetStartDate}'),
+                ElevatedButton(
+                  onPressed: () => _selectStartDate(context),
+                  child: const Text('Select Start Date'),
+                ),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
                 Text('${budgetModel.budgetEndDate}'),
                 ElevatedButton(
-                  onPressed: () => _selectDate(context),
+                  onPressed: () => _selectEndDate(context),
                   child: const Text('Select End Date'),
                 ),
               ],

@@ -27,8 +27,8 @@ class SelectDateSumWidget extends StatelessWidget {
     pickedStartDate = await showDatePicker(
       context: context,
       initialDate: todayDate,
-      firstDate: todayDate,
-      lastDate: DateTime(2023),
+      firstDate: DateTime(todayDate.year),
+      lastDate: DateTime(todayDate.year + 2),
     );
   }
 
