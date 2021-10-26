@@ -16,6 +16,8 @@ class BudgetStorage {
     if (itemString != null) {
       var item = BudgetModel.decode(itemString);
       return item;
+    } else {
+      return null;
     }
   }
 

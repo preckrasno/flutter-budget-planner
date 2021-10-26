@@ -3,7 +3,7 @@ import 'package:budget_planner2/data/models/budget_model.dart';
 import 'package:budget_planner2/data/models/expense_model.dart';
 import 'package:flutter/material.dart';
 
-class MainPageWidget extends StatelessWidget {
+class HomePageWidget extends StatelessWidget {
   final void Function(DateTime) onEndDateChose;
   final void Function(DateTime) onStartDateChose;
   final void Function(ExpenseModel) onExpenseEnter;
@@ -15,7 +15,7 @@ class MainPageWidget extends StatelessWidget {
 
   late DateTime expenseDate;
 
-  MainPageWidget({
+  HomePageWidget({
     required this.onEndDateChose,
     required this.onStartDateChose,
     required this.onExpenseEnter,
@@ -81,6 +81,7 @@ class MainPageWidget extends StatelessWidget {
     return '$perDayLeft left out of $perDayBudget UAH';
   }
 
+//TODO add calculation of day budget leftover and dayliy budget to model
   _getCalculatedBudget() {
     int days = budgetModel.getLeftDays();
     int perDayBudget = budgetModel.initialBudgetSum ~/ days;
@@ -109,31 +110,35 @@ class MainPageWidget extends StatelessWidget {
             const Spacer(),
             Column(
               children: [
+                // ElevatedButton(
+                //   onPressed: () => _selectExpenseDate(context),
+                //   child: const Text('Expense Date'),
+                // ),
                 ElevatedButton(
-                  onPressed: () => _selectExpenseDate(context),
-                  child: const Text('Expense Date'),
+                  onPressed: () {},
+                  child: const Text('Enter Expense'),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    SizedBox(
-                      width: 150,
-                      child: TextField(
-                        keyboardType: TextInputType.number,
-                        controller: expenseController,
-                      ),
-                    ),
-                    ElevatedButton(
-                      onPressed: () => onExpenseEnter(ExpenseModel(
-                        expenseDate: expenseDate,
-                        expenseSum: int.parse(
-                          expenseController.text,
-                        ),
-                      )),
-                      child: const Text('Spent'),
-                    )
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //   children: [
+                //     SizedBox(
+                //       width: 150,
+                //       child: TextField(
+                //         keyboardType: TextInputType.number,
+                //         controller: expenseController,
+                //       ),
+                //     ),
+                //     ElevatedButton(
+                //       onPressed: () => onExpenseEnter(ExpenseModel(
+                //         expenseDate: expenseDate,
+                //         expenseSum: int.parse(
+                //           expenseController.text,
+                //         ),
+                //       )),
+                //       child: const Text('Spent'),
+                //     )
+                //   ],
+                // ),
               ],
             ),
             const Spacer(),

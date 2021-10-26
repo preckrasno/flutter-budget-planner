@@ -1,8 +1,8 @@
 import 'package:budget_planner2/data/models/budget_model.dart';
 import 'package:flutter/material.dart';
 
-class SelectDateSumWidget extends StatelessWidget {
-  SelectDateSumWidget({
+class BudgetCreationWidget extends StatelessWidget {
+  BudgetCreationWidget({
     required this.onSubmit,
     required this.totalSumController,
     Key? key,
