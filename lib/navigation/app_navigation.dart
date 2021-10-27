@@ -8,7 +8,7 @@ class AppNavigation {
   static openBudgetCreation(BuildContext context) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (_) {
-        return BudgetCreationParentPage();
+        return const BudgetCreationParentPage();
       }),
       (Route<dynamic> route) => false,
     );
@@ -17,18 +17,17 @@ class AppNavigation {
   static openHomePage(BuildContext context, BudgetModel budget) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (_) {
-        return HomeParentPage(budget);
+        return HomeParentPage();
       }),
       (Route<dynamic> route) => false,
     );
   }
 
   static openExpensePage(BuildContext context, BudgetModel budget) {
-    Navigator.of(context).pushAndRemoveUntil(
+    Navigator.of(context).push(
       MaterialPageRoute(builder: (_) {
         return ExpenseEntryParentPage(budget);
       }),
-      (Route<dynamic> route) => false,
     );
   }
 }

@@ -6,9 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 //TODO complete expense entry logic and UI
 class ExpenseEntryParentPage extends StatelessWidget {
-  ExpenseEntryParentPage(this.budget, {Key? key}) : super(key: key);
+  const ExpenseEntryParentPage(this.budget, {Key? key}) : super(key: key);
 
-  BudgetModel budget;
+  final BudgetModel budget;
 
   @override
   Widget build(BuildContext context) {

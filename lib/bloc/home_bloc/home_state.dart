@@ -15,12 +15,12 @@ class HomeInitial extends HomeState {
 }
 
 class HomeCalculatedState extends HomeState {
-  const HomeCalculatedState(this.budgetModel);
+  const HomeCalculatedState(this.budget);
 
-  final BudgetModel budgetModel;
+  final BudgetModel budget;
 
   @override
-  List<Object?> get props => [budgetModel];
+  List<Object?> get props => [budget];
 }
 
 class ExpenseRouteClickedState extends HomeState {

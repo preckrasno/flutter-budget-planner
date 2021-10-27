@@ -7,6 +7,13 @@ abstract class HomeEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class LoadingEvent extends HomeEvent {
+  const LoadingEvent();
+
+  @override
+  List<Object> get props => [];
+}
+
 class EndDatePickedEvent extends HomeEvent {
   final DateTime endDate;
   const EndDatePickedEvent(this.endDate);
@@ -32,13 +39,13 @@ class ExpenseClickedEvent extends HomeEvent {
   List<Object> get props => [budget];
 }
 
-class SubmitEvent extends HomeEvent {
-  final BudgetModel budgetModel;
-  const SubmitEvent(this.budgetModel);
+// class SubmitEvent extends HomeEvent {
+//   final BudgetModel budgetModel;
+//   const SubmitEvent(this.budgetModel);
 
-  @override
-  List<Object> get props => [budgetModel];
-}
+//   @override
+//   List<Object> get props => [budgetModel];
+// }
 
 class TotalSumEnteredEvent extends HomeEvent {
   final int totalSum;

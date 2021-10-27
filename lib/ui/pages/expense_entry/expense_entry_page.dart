@@ -8,7 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ExpenseEntryPage extends StatelessWidget {
   ExpenseEntryPage(this.budget, {Key? key}) : super(key: key);
 
-  BudgetModel budget;
+  final BudgetModel budget;
   TextEditingController expenseController = TextEditingController();
 
   @override

@@ -1,16 +1,13 @@
 import 'package:budget_planner2/bloc/home_bloc/home_bloc.dart';
 import 'package:budget_planner2/data/models/budget_model.dart';
-import 'package:budget_planner2/data/models/expense_model.dart';
 import 'package:budget_planner2/navigation/app_navigation.dart';
 import 'package:budget_planner2/ui/widgets/home_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage(this.budget, {Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
 
-  BudgetModel budget;
-  // TextEditingController expenseController = TextEditingController();
   TextEditingController totalSumController = TextEditingController();
 
   @override
@@ -20,23 +17,32 @@ class HomePage extends StatelessWidget {
     return BlocConsumer<HomeBloc, HomeState>(
       listener: (context, state) {
         if (state is ExpenseRouteClickedState) {
-          AppNavigation.openExpensePage(context, budget);
+          AppNavigation.openExpensePage(context, state.budget);
+        }
+      },
+      buildWhen: (previousState, state) {
+        if (state is HomeInitial || state is HomeCalculatedState) {
+          return true;
+        } else {
+          return false;
         }
       },
       builder: (context, state) {
-        if (state is HomeCalculatedState) {
-          budget = state.budgetModel;
+        if (state is HomeInitial) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         }
-        return HomePageWidget(
-            onEndDateChose: (value) => _addedEndDate(homeBloc, value),
-            onStartDateChose: (value) => _addedStartDate(homeBloc, value),
-            onExpenseAdd: (value) => _addExpense(homeBloc, value),
-            onTotalSumEnter: (value) => _enteredTotalSum(homeBloc, value),
-            budgetModel: budget,
-            // expenseController: expenseController,
-            totalSumController: totalSumController);
-
-        // throw ArgumentError('HomeState not expected');
+        if (state is HomeCalculatedState) {
+          return HomePageWidget(
+              onEndDateChose: (value) => _addedEndDate(homeBloc, value),
+              onStartDateChose: (value) => _addedStartDate(homeBloc, value),
+              onExpenseAdd: (value) => _addExpense(homeBloc, value),
+              onTotalSumEnter: (value) => _enteredTotalSum(homeBloc, value),
+              budgetModel: state.budget,
+              totalSumController: totalSumController);
+        }
+        throw ArgumentError('$state unhandled');
       },
     );
   }
