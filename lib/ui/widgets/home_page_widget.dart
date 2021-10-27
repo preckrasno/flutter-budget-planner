@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 class HomePageWidget extends StatelessWidget {
   final void Function(DateTime) onEndDateChose;
   final void Function(DateTime) onStartDateChose;
-  final void Function(ExpenseModel) onExpenseEnter;
+  final void Function(BudgetModel) onExpenseAdd;
   final void Function(int) onTotalSumEnter;
-  final TextEditingController expenseController;
+  // final TextEditingController expenseController;
   final TextEditingController totalSumController;
   final DateTime todayDate = DateTime.now();
   final BudgetModel budgetModel;
@@ -18,10 +18,10 @@ class HomePageWidget extends StatelessWidget {
   HomePageWidget({
     required this.onEndDateChose,
     required this.onStartDateChose,
-    required this.onExpenseEnter,
+    required this.onExpenseAdd,
     required this.onTotalSumEnter,
     required this.budgetModel,
-    required this.expenseController,
+    // required this.expenseController,
     required this.totalSumController,
     Key? key,
   }) : super(key: key);
@@ -115,7 +115,7 @@ class HomePageWidget extends StatelessWidget {
                 //   child: const Text('Expense Date'),
                 // ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => onExpenseAdd(budgetModel),
                   child: const Text('Enter Expense'),
                 ),
                 // Row(

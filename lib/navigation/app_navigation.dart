@@ -26,7 +26,7 @@ class AppNavigation {
   static openExpensePage(BuildContext context, BudgetModel budget) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (_) {
-        return ExpenseEntryParentPage();
+        return ExpenseEntryParentPage(budget);
       }),
       (Route<dynamic> route) => false,
     );
