@@ -1,4 +1,3 @@
-import 'package:budget_planner2/data/date_time_extensions.dart';
 import 'package:budget_planner2/data/models/budget_model.dart';
 import 'package:budget_planner2/data/models/expense_model.dart';
 import 'package:flutter/material.dart';
@@ -17,16 +16,12 @@ class ExpenseEntryWidget extends StatelessWidget {
   final TextEditingController expenseController;
   final void Function(ExpenseModel) onExpenseEnter;
 
-  DateTime _getInitialDate(DateTime budgetModelDate) {
-    return budgetModelDate.isOlderThan(todayDate) ? budgetModelDate : todayDate;
-  }
-
   _selectExpenseDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: _getInitialDate(budget.budgetEndDate),
-      firstDate: todayDate,
-      lastDate: DateTime(2025),
+      initialDate: todayDate,
+      firstDate: budget.budgetStartDate,
+      lastDate: budget.budgetEndDate,
     );
     if (picked != null && picked != budget.budgetEndDate) {
       expenseDate = picked;

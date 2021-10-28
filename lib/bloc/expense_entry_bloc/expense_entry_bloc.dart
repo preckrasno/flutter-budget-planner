@@ -7,8 +7,11 @@ part 'expense_entry_state.dart';
 
 class ExpenseEntryBloc extends Bloc<ExpenseEntryEvent, ExpenseEntryState> {
   ExpenseEntryBloc() : super(ExpenseEntryInitial()) {
-    on<ExpenseEntryEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<AddedExpenseEvent>(_onBudgetSubmitEvent);
+  }
+
+  _onBudgetSubmitEvent(
+      AddedExpenseEvent event, Emitter<ExpenseEntryState> emit) async {
+    emit(ExpenseAddedState());
   }
 }

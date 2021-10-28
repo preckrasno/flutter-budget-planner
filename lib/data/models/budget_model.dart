@@ -60,7 +60,7 @@ class BudgetModel extends Equatable {
   }
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         initialBudgetSum,
         budgetEndDate,
         budgetStartDate,
