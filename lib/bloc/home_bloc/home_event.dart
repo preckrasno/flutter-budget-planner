@@ -39,14 +39,6 @@ class ExpenseClickedEvent extends HomeEvent {
   List<Object> get props => [budget];
 }
 
-// class SubmitEvent extends HomeEvent {
-//   final BudgetModel budgetModel;
-//   const SubmitEvent(this.budgetModel);
-
-//   @override
-//   List<Object> get props => [budgetModel];
-// }
-
 class TotalSumEnteredEvent extends HomeEvent {
   final int totalSum;
   const TotalSumEnteredEvent(this.totalSum);

@@ -19,6 +19,9 @@ class HomePage extends StatelessWidget {
         if (state is ExpenseRouteClickedState) {
           AppNavigation.openExpensePage(context, state.budget);
         }
+        if (state is UnInitializedBudgetState) {
+          AppNavigation.openBudgetCreation(context);
+        }
       },
       buildWhen: (previousState, state) {
         if (state is HomeInitial || state is HomeCalculatedState) {
@@ -35,12 +38,13 @@ class HomePage extends StatelessWidget {
         }
         if (state is HomeCalculatedState) {
           return HomePageWidget(
-              onEndDateChose: (value) => _addedEndDate(homeBloc, value),
-              onStartDateChose: (value) => _addedStartDate(homeBloc, value),
-              onExpenseAdd: (value) => _addExpense(homeBloc, value),
-              onTotalSumEnter: (value) => _enteredTotalSum(homeBloc, value),
-              budgetModel: state.budget,
-              totalSumController: totalSumController);
+            onEndDateChose: (value) => _addedEndDate(homeBloc, value),
+            onStartDateChose: (value) => _addedStartDate(homeBloc, value),
+            onExpenseAdd: (value) => _addExpense(homeBloc, value),
+            onTotalSumEnter: (value) => _enteredTotalSum(homeBloc, value),
+            budgetModel: state.budget,
+            totalSumController: totalSumController,
+          );
         }
         throw ArgumentError('$state unhandled');
       },

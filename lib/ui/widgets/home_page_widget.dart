@@ -8,7 +8,6 @@ class HomePageWidget extends StatelessWidget {
   final void Function(DateTime) onStartDateChose;
   final void Function(BudgetModel) onExpenseAdd;
   final void Function(int) onTotalSumEnter;
-  // final TextEditingController expenseController;
   final TextEditingController totalSumController;
   final DateTime todayDate = DateTime.now();
   final BudgetModel budgetModel;
@@ -21,25 +20,12 @@ class HomePageWidget extends StatelessWidget {
     required this.onExpenseAdd,
     required this.onTotalSumEnter,
     required this.budgetModel,
-    // required this.expenseController,
     required this.totalSumController,
     Key? key,
   }) : super(key: key);
 
   DateTime _getInitialDate(DateTime budgetModelDate) {
     return budgetModelDate.isOlderThan(todayDate) ? budgetModelDate : todayDate;
-  }
-
-  _selectExpenseDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _getInitialDate(budgetModel.budgetEndDate),
-      firstDate: todayDate,
-      lastDate: DateTime(2025),
-    );
-    if (picked != null && picked != budgetModel.budgetEndDate) {
-      expenseDate = picked;
-    }
   }
 
   _selectEndDate(BuildContext context) async {
@@ -110,35 +96,10 @@ class HomePageWidget extends StatelessWidget {
             const Spacer(),
             Column(
               children: [
-                // ElevatedButton(
-                //   onPressed: () => _selectExpenseDate(context),
-                //   child: const Text('Expense Date'),
-                // ),
                 ElevatedButton(
                   onPressed: () => onExpenseAdd(budgetModel),
                   child: const Text('Enter Expense'),
                 ),
-                // Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //   children: [
-                //     SizedBox(
-                //       width: 150,
-                //       child: TextField(
-                //         keyboardType: TextInputType.number,
-                //         controller: expenseController,
-                //       ),
-                //     ),
-                //     ElevatedButton(
-                //       onPressed: () => onExpenseEnter(ExpenseModel(
-                //         expenseDate: expenseDate,
-                //         expenseSum: int.parse(
-                //           expenseController.text,
-                //         ),
-                //       )),
-                //       child: const Text('Spent'),
-                //     )
-                //   ],
-                // ),
               ],
             ),
             const Spacer(),

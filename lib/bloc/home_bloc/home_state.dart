@@ -4,14 +4,14 @@ abstract class HomeState extends Equatable {
   const HomeState();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 class HomeInitial extends HomeState {
   const HomeInitial();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 }
 
 class HomeCalculatedState extends HomeState {
@@ -20,13 +20,16 @@ class HomeCalculatedState extends HomeState {
   final BudgetModel budget;
 
   @override
-  List<Object?> get props => [budget];
+  List<Object> get props => [budget];
 }
 
 class ExpenseRouteClickedState extends HomeState {
   const ExpenseRouteClickedState(this.budget);
 
   final BudgetModel budget;
+
   @override
-  List<Object?> get props => [budget];
+  List<Object> get props => [budget];
 }
+
+class UnInitializedBudgetState extends HomeState {}

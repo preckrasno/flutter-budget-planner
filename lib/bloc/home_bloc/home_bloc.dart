@@ -33,7 +33,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel!);
       emit(HomeCalculatedState(budgetModel!));
     } else {
-      emit(const HomeInitial());
+      emit(UnInitializedBudgetState());
     }
   }
 
@@ -44,7 +44,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel!);
       emit(HomeCalculatedState(budgetModel!));
     } else {
-      emit(const HomeInitial());
+      emit(UnInitializedBudgetState());
     }
   }
 
@@ -55,7 +55,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel!);
       emit(HomeCalculatedState(budgetModel!));
     } else {
-      emit(const HomeInitial());
+      emit(UnInitializedBudgetState());
     }
   }
 
