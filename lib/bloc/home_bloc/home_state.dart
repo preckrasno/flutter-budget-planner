@@ -32,4 +32,9 @@ class ExpenseRouteClickedState extends HomeState {
   List<Object> get props => [budget];
 }
 
-class UnInitializedBudgetState extends HomeState {}
+class UnInitializedBudgetState extends HomeState {
+  const UnInitializedBudgetState();
+
+  @override
+  List<Object> get props => [];
+}

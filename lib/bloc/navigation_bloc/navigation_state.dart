@@ -7,16 +7,25 @@ abstract class NavigationState extends Equatable {
   List<Object> get props => [];
 }
 
-class NavigationInitial extends NavigationState {}
-
-class BudgetNotAvailableState extends NavigationState {}
-
-class BudgetIsAvailableState extends NavigationState {
-  final BudgetModel budget;
-  const BudgetIsAvailableState(this.budget);
+class NavigationInitial extends NavigationState {
+  const NavigationInitial();
 
   @override
-  List<Object> get props => [budget];
+  List<Object> get props => [];
+}
+
+class BudgetNotAvailableState extends NavigationState {
+  const BudgetNotAvailableState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class BudgetIsAvailableState extends NavigationState {
+  const BudgetIsAvailableState();
+
+  @override
+  List<Object> get props => [];
 }
 
 class LoadingState extends NavigationState {}

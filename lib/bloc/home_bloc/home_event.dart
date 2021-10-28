@@ -22,14 +22,6 @@ class EndDatePickedEvent extends HomeEvent {
   List<Object> get props => [endDate];
 }
 
-class StartDatePickedEvent extends HomeEvent {
-  final DateTime startDate;
-  const StartDatePickedEvent(this.startDate);
-
-  @override
-  List<Object> get props => [startDate];
-}
-
 class ExpenseClickedEvent extends HomeEvent {
   const ExpenseClickedEvent(this.budget);
 

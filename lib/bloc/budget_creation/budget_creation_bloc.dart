@@ -12,13 +12,13 @@ class BudgetCreationBloc
 
   BudgetCreationBloc(
     this._budgetRepositoryImplementation,
-  ) : super(BudgetCreationInitial()) {
+  ) : super(const BudgetCreationInitial()) {
     on<BudgetSubmitEvent>(_onBudgetSubmitEvent);
   }
 
   _onBudgetSubmitEvent(
       BudgetSubmitEvent event, Emitter<BudgetCreationState> emit) async {
     await _budgetRepositoryImplementation.saveItemsToStorage(event.budget);
-    emit(BudgetCreatedState(event.budget));
+    emit(const BudgetCreatedState());
   }
 }

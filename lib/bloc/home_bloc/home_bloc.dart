@@ -16,7 +16,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   ) : super(const HomeInitial()) {
     on<LoadingEvent>(_onLoadingEvent);
     on<EndDatePickedEvent>(_onEndDatePickedEvent);
-    on<StartDatePickedEvent>(_onStartDatePickedEvent);
     on<ExpenseClickedEvent>(_onExpenseClickedEvent);
     on<TotalSumEnteredEvent>(_onTotalSumEnteredEvent);
   }
@@ -41,17 +40,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       EndDatePickedEvent event, Emitter<HomeState> emit) async {
     if (budgetModel != null) {
       budgetModel!.budgetEndDate = event.endDate;
-      await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel!);
-      emit(HomeCalculatedState(budgetModel!));
-    } else {
-      emit(UnInitializedBudgetState());
-    }
-  }
-
-  Future<void> _onStartDatePickedEvent(
-      StartDatePickedEvent event, Emitter<HomeState> emit) async {
-    if (budgetModel != null) {
-      budgetModel!.budgetStartDate = event.startDate;
       await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel!);
       emit(HomeCalculatedState(budgetModel!));
     } else {

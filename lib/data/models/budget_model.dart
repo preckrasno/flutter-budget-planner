@@ -6,21 +6,28 @@ import 'package:equatable/equatable.dart';
 class BudgetModel extends Equatable {
   int initialBudgetSum;
   DateTime budgetEndDate;
-  DateTime budgetStartDate;
   List<ExpenseModel> expensesList;
 
   BudgetModel({
     required this.initialBudgetSum,
     required this.budgetEndDate,
-    required this.budgetStartDate,
     required this.expensesList,
   });
 
+  getCalculatedBudget() {
+    int totalExpenses = 0;
+    for (ExpenseModel expense in expensesList) {
+      totalExpenses += expense.expenseSum;
+    }
+    return initialBudgetSum - totalExpenses;
+  }
+
+  // Return number of days from today till the end of the budget
   int getLeftDays() {
     int millisecondsToEndDate = budgetEndDate.millisecondsSinceEpoch;
-    int millisecondsToStartDate = budgetStartDate.millisecondsSinceEpoch;
+    int millisecondsToToday = DateTime.now().millisecondsSinceEpoch;
     int millisecondsFromStartToEndDate =
-        millisecondsToEndDate - millisecondsToStartDate;
+        millisecondsToEndDate - millisecondsToToday;
     int millisecondsInOneDay = 86400000;
     return (millisecondsFromStartToEndDate / millisecondsInOneDay).ceil();
   }
@@ -32,7 +39,6 @@ class BudgetModel extends Equatable {
     return BudgetModel(
       initialBudgetSum: jsonData['initialBudgetSum'],
       budgetEndDate: DateTime.parse(jsonData['budgetEndDate']),
-      budgetStartDate: DateTime.parse(jsonData['budgetStartDate']),
       expensesList: expensesList,
     );
   }
@@ -46,7 +52,6 @@ class BudgetModel extends Equatable {
     return {
       'initialBudgetSum': initialBudgetSum,
       'budgetEndDate': budgetEndDate.toString(),
-      'budgetStartDate': budgetStartDate.toString(),
       'expensesList': expensesListMapped,
     };
   }
@@ -63,7 +68,6 @@ class BudgetModel extends Equatable {
   List<Object> get props => [
         initialBudgetSum,
         budgetEndDate,
-        budgetStartDate,
         expensesList,
       ];
 }

@@ -14,7 +14,7 @@ class MainPage extends StatelessWidget {
           AppNavigation.openBudgetCreation(context);
         }
         if (state is BudgetIsAvailableState) {
-          AppNavigation.openHomePage(context, state.budget);
+          AppNavigation.openHomePage(context);
         }
       },
       buildWhen: (previousState, state) {

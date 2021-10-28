@@ -39,7 +39,6 @@ class HomePage extends StatelessWidget {
         if (state is HomeCalculatedState) {
           return HomePageWidget(
             onEndDateChose: (value) => _addedEndDate(homeBloc, value),
-            onStartDateChose: (value) => _addedStartDate(homeBloc, value),
             onExpenseAdd: (value) => _addExpense(homeBloc, value),
             onTotalSumEnter: (value) => _enteredTotalSum(homeBloc, value),
             budgetModel: state.budget,
@@ -56,13 +55,6 @@ class HomePage extends StatelessWidget {
     DateTime date,
   ) {
     bloc.add(EndDatePickedEvent(date));
-  }
-
-  _addedStartDate(
-    HomeBloc bloc,
-    DateTime date,
-  ) {
-    bloc.add(StartDatePickedEvent(date));
   }
 
   _addExpense(HomeBloc bloc, BudgetModel budget) {

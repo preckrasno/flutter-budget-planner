@@ -14,7 +14,7 @@ class AppNavigation {
     );
   }
 
-  static openHomePage(BuildContext context, BudgetModel budget) {
+  static openHomePage(BuildContext context) {
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (_) {
         return HomeParentPage();

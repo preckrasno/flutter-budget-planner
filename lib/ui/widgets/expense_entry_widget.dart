@@ -20,7 +20,7 @@ class ExpenseEntryWidget extends StatelessWidget {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: todayDate,
-      firstDate: budget.budgetStartDate,
+      firstDate: DateTime(todayDate.year),
       lastDate: budget.budgetEndDate,
     );
     if (picked != null && picked != budget.budgetEndDate) {

@@ -17,7 +17,7 @@ class BudgetCreationPage extends StatelessWidget {
     return BlocConsumer<BudgetCreationBloc, BudgetCreationState>(
       listener: (context, state) {
         if (state is BudgetCreatedState) {
-          AppNavigation.openHomePage(context, state.budget);
+          AppNavigation.openHomePage(context);
         }
       },
       buildWhen: (previousState, state) {

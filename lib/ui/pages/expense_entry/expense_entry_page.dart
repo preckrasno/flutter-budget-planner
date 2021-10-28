@@ -1,6 +1,7 @@
 import 'package:budget_planner2/bloc/expense_entry_bloc/expense_entry_bloc.dart';
 import 'package:budget_planner2/data/models/budget_model.dart';
 import 'package:budget_planner2/data/models/expense_model.dart';
+import 'package:budget_planner2/navigation/app_navigation.dart';
 import 'package:budget_planner2/ui/widgets/expense_entry_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,7 +17,15 @@ class ExpenseEntryPage extends StatelessWidget {
     ExpenseEntryBloc expenseEntryBloc =
         BlocProvider.of<ExpenseEntryBloc>(context);
 
-    return BlocBuilder<ExpenseEntryBloc, ExpenseEntryState>(
+    return BlocConsumer<ExpenseEntryBloc, ExpenseEntryState>(
+      listener: (previousSate, state) {
+        if (state is ExpenseAddedState) {
+          AppNavigation.openHomePage(context);
+        }
+        if (state is UnInitializedBudgetState) {
+          AppNavigation.openBudgetCreation(context);
+        }
+      },
       builder: (context, state) {
         return ExpenseEntryWidget(
           budget: budget,

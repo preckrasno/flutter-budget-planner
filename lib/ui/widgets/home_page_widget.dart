@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 class HomePageWidget extends StatelessWidget {
   final void Function(DateTime) onEndDateChose;
-  final void Function(DateTime) onStartDateChose;
   final void Function(BudgetModel) onExpenseAdd;
   final void Function(int) onTotalSumEnter;
   final TextEditingController totalSumController;
@@ -16,7 +15,6 @@ class HomePageWidget extends StatelessWidget {
 
   HomePageWidget({
     required this.onEndDateChose,
-    required this.onStartDateChose,
     required this.onExpenseAdd,
     required this.onTotalSumEnter,
     required this.budgetModel,
@@ -40,42 +38,22 @@ class HomePageWidget extends StatelessWidget {
     }
   }
 
-  _selectStartDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: _getInitialDate(budgetModel.budgetStartDate),
-      firstDate: DateTime(todayDate.year),
-      lastDate: DateTime(todayDate.year + 2),
-    );
-    if (picked != null && picked != budgetModel.budgetEndDate) {
-      onStartDateChose(picked);
-    }
-  }
-
   String _getPerDaySum() {
-    int days = budgetModel.getLeftDays();
-    int perDayBudget = budgetModel.initialBudgetSum ~/ days;
+    int daysLeftToBudgetEnd = budgetModel.getLeftDays();
+    int perDayBudgetInitial =
+        budgetModel.getCalculatedBudget() ~/ daysLeftToBudgetEnd;
     int totalDayExpenses = 0;
     for (ExpenseModel expense in budgetModel.expensesList.where(
-      (element) => element.expenseDate.isSameDate(
-        DateTime.now(),
-      ),
+      (element) => element.expenseDate.isSameDate(DateTime.now()),
     )) {
       totalDayExpenses += expense.expenseSum;
     }
-    int perDayLeft = perDayBudget - totalDayExpenses;
-    return '$perDayLeft left out of $perDayBudget UAH';
+    int perDayLeft = perDayBudgetInitial - totalDayExpenses;
+    return '$perDayLeft left out of $perDayBudgetInitial UAH per today';
   }
 
-//TODO add calculation of day budget leftover and dayliy budget to model
   _getCalculatedBudget() {
-    int days = budgetModel.getLeftDays();
-    int perDayBudget = budgetModel.initialBudgetSum ~/ days;
-    int totalExpenses = 0;
-    for (ExpenseModel expense in budgetModel.expensesList) {
-      totalExpenses += expense.expenseSum;
-    }
-    return (budgetModel.initialBudgetSum - totalExpenses).toString();
+    return budgetModel.getCalculatedBudget().toString();
   }
 
   @override
@@ -104,16 +82,6 @@ class HomePageWidget extends StatelessWidget {
             ),
             const Spacer(),
             const Divider(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text('${budgetModel.budgetStartDate}'),
-                ElevatedButton(
-                  onPressed: () => _selectStartDate(context),
-                  child: const Text('Select Start Date'),
-                ),
-              ],
-            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [

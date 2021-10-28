@@ -7,12 +7,16 @@ abstract class BudgetCreationState extends Equatable {
   List<Object> get props => [];
 }
 
-class BudgetCreationInitial extends BudgetCreationState {}
-
-class BudgetCreatedState extends BudgetCreationState {
-  final BudgetModel budget;
-  const BudgetCreatedState(this.budget);
+class BudgetCreationInitial extends BudgetCreationState {
+  const BudgetCreationInitial();
 
   @override
-  List<Object> get props => [budget];
+  List<Object> get props => [];
+}
+
+class BudgetCreatedState extends BudgetCreationState {
+  const BudgetCreatedState();
+
+  @override
+  List<Object> get props => [];
 }

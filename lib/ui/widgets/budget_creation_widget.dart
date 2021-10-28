@@ -23,21 +23,11 @@ class BudgetCreationWidget extends StatelessWidget {
     );
   }
 
-  _selectStartDate(BuildContext context) async {
-    pickedStartDate = await showDatePicker(
-      context: context,
-      initialDate: todayDate,
-      firstDate: DateTime(todayDate.year),
-      lastDate: DateTime(todayDate.year + 2),
-    );
-  }
-
-  _getBudget(DateTime? startDate, DateTime? endDate, String? totalSum) {
-    if (startDate != null && endDate != null && totalSum != null) {
+  _getBudget(DateTime? endDate, String? totalSum) {
+    if (endDate != null && totalSum != null) {
       var budget = BudgetModel(
         initialBudgetSum: int.parse(totalSum),
         budgetEndDate: endDate,
-        budgetStartDate: startDate,
         expensesList: [],
       );
       onSubmit(budget);
@@ -50,18 +40,9 @@ class BudgetCreationWidget extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () => _selectStartDate(context),
-                child: const Text('Select Start Date'),
-              ),
-              ElevatedButton(
-                onPressed: () => _selectEndDate(context),
-                child: const Text('Select End Date'),
-              ),
-            ],
+          ElevatedButton(
+            onPressed: () => _selectEndDate(context),
+            child: const Text('Select End Date'),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -75,7 +56,6 @@ class BudgetCreationWidget extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () => _getBudget(
-                  pickedStartDate,
                   pickedEndDate,
                   totalSumController.text,
                 ),

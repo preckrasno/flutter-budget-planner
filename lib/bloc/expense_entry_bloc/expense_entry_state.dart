@@ -7,6 +7,23 @@ abstract class ExpenseEntryState extends Equatable {
   List<Object> get props => [];
 }
 
-class ExpenseEntryInitial extends ExpenseEntryState {}
+class ExpenseEntryInitial extends ExpenseEntryState {
+  const ExpenseEntryInitial();
 
-class ExpenseAddedState extends ExpenseEntryState {}
+  @override
+  List<Object> get props => [];
+}
+
+class ExpenseAddedState extends ExpenseEntryState {
+  const ExpenseAddedState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class UnInitializedBudgetState extends ExpenseEntryState {
+  const UnInitializedBudgetState();
+
+  @override
+  List<Object> get props => [];
+}

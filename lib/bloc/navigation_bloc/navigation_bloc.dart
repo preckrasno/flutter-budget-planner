@@ -17,9 +17,9 @@ class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
     BudgetModel? budgetModel =
         await _budgetRepositoryImplementation.getItemsFromStorage();
     if (budgetModel == null) {
-      emit(BudgetNotAvailableState());
+      emit(const BudgetNotAvailableState());
     } else {
-      emit(BudgetIsAvailableState(budgetModel));
+      emit(const BudgetIsAvailableState());
     }
   }
 }
