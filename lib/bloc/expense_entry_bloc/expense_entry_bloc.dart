@@ -11,7 +11,6 @@ class ExpenseEntryBloc extends Bloc<ExpenseEntryEvent, ExpenseEntryState> {
   ExpenseEntryBloc(this._budgetRepositoryImplementation)
       : super(const ExpenseEntryInitial()) {
     on<AddedExpenseEvent>(_onBudgetSubmitEvent);
-    on<ReturnBackEvent>(_onReturnBackEvent);
   }
 
   final BudgetRepositoryImplementation _budgetRepositoryImplementation;
@@ -27,9 +26,5 @@ class ExpenseEntryBloc extends Bloc<ExpenseEntryEvent, ExpenseEntryState> {
     } else {
       emit(const UnInitializedBudgetState());
     }
-  }
-
-  _onReturnBackEvent(ReturnBackEvent event, Emitter<ExpenseEntryState> emit) {
-    emit(const ReturnBackState());
   }
 }

@@ -27,10 +27,3 @@ class UnInitializedBudgetState extends ExpenseEntryState {
   @override
   List<Object> get props => [];
 }
-
-class ReturnBackState extends ExpenseEntryState {
-  const ReturnBackState();
-
-  @override
-  List<Object> get props => [];
-}

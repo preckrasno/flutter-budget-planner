@@ -13,8 +13,8 @@ class ExpenseListParentPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => ExpenseListBloc(
         Injector().get<BudgetRepositoryImplementation>(),
-      )..add(LoadingEvent()),
-      child: ExpenseListPage(),
+      )..add(const LoadingEvent()),
+      child: const ExpenseListPage(),
     );
   }
 }

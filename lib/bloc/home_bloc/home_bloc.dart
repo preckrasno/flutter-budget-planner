@@ -30,7 +30,6 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       TotalSumEnteredEvent event, Emitter<HomeState> emit) async {
     if (budgetModel != null) {
       budgetModel!.initialBudgetSum = event.totalSum;
-      print(budgetModel!);
       await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel!);
       emit(HomeCalculatedState(budgetModel!));
     } else {
@@ -51,9 +50,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   void _onExpenseEntryEvent(ExpenseEntryEvent event, Emitter<HomeState> emit) {
     emit(OpenExpenseEntryState(event.budget));
+    add(const LoadingEvent());
   }
 
   void _onExpenseListEvent(ExpenseListEvent event, Emitter<HomeState> emit) {
-    emit(OpenExpenseListState());
+    emit(const OpenExpenseListState());
+    add(const LoadingEvent());
   }
 }
