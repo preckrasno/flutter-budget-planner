@@ -1,5 +1,6 @@
 import 'package:budget_planner2/data/models/budget_model.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ExpenseListWidget extends StatelessWidget {
   ExpenseListWidget({required this.budget, Key? key}) : super(key: key);
@@ -8,7 +9,10 @@ class ExpenseListWidget extends StatelessWidget {
   List<Widget> _getExpenseList() {
     List<Widget> expenseList = [];
     for (var expense in budget.expensesList) {
-      expenseList.add(Text('${expense.expenseSum} ${expense.expenseDate}'));
+      String formattedDate =
+          DateFormat('yyyy-MM-dd').format(expense.expenseDate);
+      expenseList.add(Text(
+          'Amount: ${expense.expenseSum} Date: $formattedDate id: ${expense.id.substring(0, 4)}'));
     }
     print(expenseList);
     return expenseList;

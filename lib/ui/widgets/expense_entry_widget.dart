@@ -15,6 +15,7 @@ class ExpenseEntryWidget extends StatelessWidget {
   late DateTime expenseDate;
   final TextEditingController expenseController;
   final void Function(ExpenseModel) onExpenseEnter;
+  late ExpenseModel expense;
 
   _selectExpenseDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -26,6 +27,17 @@ class ExpenseEntryWidget extends StatelessWidget {
     if (picked != null && picked != budget.budgetEndDate) {
       expenseDate = picked;
     }
+  }
+
+  _addExpense() {
+    int expenseSum = int.parse(
+      expenseController.text,
+    );
+    expense = ExpenseModel(
+      expenseDate: expenseDate,
+      expenseSum: expenseSum,
+    );
+    onExpenseEnter(expense);
   }
 
   @override
@@ -52,12 +64,7 @@ class ExpenseEntryWidget extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () => onExpenseEnter(ExpenseModel(
-                  expenseDate: expenseDate,
-                  expenseSum: int.parse(
-                    expenseController.text,
-                  ),
-                )),
+                onPressed: () => _addExpense(),
                 child: const Text('Spent'),
               )
             ],

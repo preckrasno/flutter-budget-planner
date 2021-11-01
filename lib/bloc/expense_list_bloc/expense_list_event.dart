@@ -9,7 +9,13 @@ abstract class ExpenseListEvent extends Equatable {
 
 class LoadingEvent extends ExpenseListEvent {
   const LoadingEvent();
+}
+
+class RemoveExpenseEvent extends ExpenseListEvent {
+  final String expenseId;
+
+  const RemoveExpenseEvent(this.expenseId);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [expenseId];
 }

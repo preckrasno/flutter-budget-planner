@@ -19,4 +19,18 @@ class ExpenseListBloc extends Bloc<ExpenseListEvent, ExpenseListState> {
     budgetModel = await _budgetRepositoryImplementation.getItemsFromStorage();
     emit(LoadedState(budgetModel!));
   }
+
+//WIP rewrite to delete the expense from budget
+  // _onBudgetSubmitEvent(
+  //     RemoveExpenseEvent event, Emitter<ExpenseListState> emit) async {
+  //   BudgetModel? budgetModel =
+  //       await _budgetRepositoryImplementation.getItemsFromStorage();
+  //   if (budgetModel != null) {
+  //     budgetModel.expensesList.add(event.expense);
+  //     await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel);
+  //     emit(const ExpenseAddedState());
+  //   } else {
+  //     emit(const UnInitializedBudgetState());
+  //   }
+  // }
 }
