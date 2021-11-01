@@ -16,11 +16,14 @@ class HomePage extends StatelessWidget {
 
     return BlocConsumer<HomeBloc, HomeState>(
       listener: (context, state) {
-        if (state is ExpenseRouteClickedState) {
-          AppNavigation.openExpensePage(context, state.budget);
+        if (state is OpenExpenseEntryState) {
+          AppNavigation.openExpenseEntry(context, state.budget);
         }
         if (state is UnInitializedBudgetState) {
           AppNavigation.openBudgetCreation(context);
+        }
+        if (state is OpenExpenseListState) {
+          AppNavigation.openExpenseList(context);
         }
       },
       buildWhen: (previousState, state) {
@@ -43,6 +46,7 @@ class HomePage extends StatelessWidget {
             onTotalSumEnter: (value) => _enteredTotalSum(homeBloc, value),
             budgetModel: state.budget,
             totalSumController: totalSumController,
+            onExpenseList: () => _openExpenseList(homeBloc),
           );
         }
         throw ArgumentError('$state unhandled');
@@ -58,7 +62,11 @@ class HomePage extends StatelessWidget {
   }
 
   _addExpense(HomeBloc bloc, BudgetModel budget) {
-    bloc.add(ExpenseClickedEvent(budget));
+    bloc.add(ExpenseEntryEvent(budget));
+  }
+
+  _openExpenseList(HomeBloc bloc) {
+    bloc.add(ExpenseListEvent());
   }
 
   _enteredTotalSum(

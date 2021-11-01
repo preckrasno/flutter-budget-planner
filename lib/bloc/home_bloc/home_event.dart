@@ -22,13 +22,20 @@ class EndDatePickedEvent extends HomeEvent {
   List<Object> get props => [endDate];
 }
 
-class ExpenseClickedEvent extends HomeEvent {
-  const ExpenseClickedEvent(this.budget);
+class ExpenseEntryEvent extends HomeEvent {
+  const ExpenseEntryEvent(this.budget);
 
   final BudgetModel budget;
 
   @override
   List<Object> get props => [budget];
+}
+
+class ExpenseListEvent extends HomeEvent {
+  const ExpenseListEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 class TotalSumEnteredEvent extends HomeEvent {

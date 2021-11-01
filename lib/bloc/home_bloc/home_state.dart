@@ -23,13 +23,20 @@ class HomeCalculatedState extends HomeState {
   List<Object> get props => [budget];
 }
 
-class ExpenseRouteClickedState extends HomeState {
-  const ExpenseRouteClickedState(this.budget);
+class OpenExpenseEntryState extends HomeState {
+  const OpenExpenseEntryState(this.budget);
 
   final BudgetModel budget;
 
   @override
   List<Object> get props => [budget];
+}
+
+class OpenExpenseListState extends HomeState {
+  const OpenExpenseListState();
+
+  @override
+  List<Object> get props => [];
 }
 
 class UnInitializedBudgetState extends HomeState {

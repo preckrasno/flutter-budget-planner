@@ -7,6 +7,7 @@ class ExpenseEntryWidget extends StatelessWidget {
     required this.budget,
     required this.expenseController,
     required this.onExpenseEnter,
+    required this.onBack,
     Key? key,
   }) : super(key: key);
 
@@ -15,6 +16,7 @@ class ExpenseEntryWidget extends StatelessWidget {
   late DateTime expenseDate;
   final TextEditingController expenseController;
   final void Function(ExpenseModel) onExpenseEnter;
+  final void Function() onBack;
 
   _selectExpenseDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -33,6 +35,10 @@ class ExpenseEntryWidget extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Enter Expense'),
+        leading: IconButton(
+          onPressed: onBack,
+          icon: const Icon(Icons.chevron_left),
+        ),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class HomePageWidget extends StatelessWidget {
   final void Function(DateTime) onEndDateChose;
   final void Function(BudgetModel) onExpenseAdd;
+  final void Function() onExpenseList;
   final void Function(int) onTotalSumEnter;
   final TextEditingController totalSumController;
   final DateTime todayDate = DateTime.now();
@@ -16,6 +17,7 @@ class HomePageWidget extends StatelessWidget {
   HomePageWidget({
     required this.onEndDateChose,
     required this.onExpenseAdd,
+    required this.onExpenseList,
     required this.onTotalSumEnter,
     required this.budgetModel,
     required this.totalSumController,
@@ -78,6 +80,10 @@ class HomePageWidget extends StatelessWidget {
                   onPressed: () => onExpenseAdd(budgetModel),
                   child: const Text('Enter Expense'),
                 ),
+                ElevatedButton(
+                  onPressed: onExpenseList,
+                  child: const Text('Expense List'),
+                )
               ],
             ),
             const Spacer(),

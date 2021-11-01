@@ -25,12 +25,16 @@ class ExpenseEntryPage extends StatelessWidget {
         if (state is UnInitializedBudgetState) {
           AppNavigation.openBudgetCreation(context);
         }
+        if (state is ReturnBackState) {
+          AppNavigation.openHomePage(context);
+        }
       },
       builder: (context, state) {
         return ExpenseEntryWidget(
           budget: budget,
           expenseController: expenseController,
           onExpenseEnter: (value) => _addedExpense(expenseEntryBloc, value),
+          onBack: () => _onBack(expenseEntryBloc),
         );
       },
     );
@@ -38,5 +42,9 @@ class ExpenseEntryPage extends StatelessWidget {
 
   _addedExpense(ExpenseEntryBloc bloc, ExpenseModel expense) {
     bloc.add(AddedExpenseEvent(expense));
+  }
+
+  _onBack(ExpenseEntryBloc bloc) {
+    bloc.add(const ReturnBackEvent());
   }
 }

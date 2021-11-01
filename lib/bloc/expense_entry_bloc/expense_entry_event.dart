@@ -15,3 +15,10 @@ class AddedExpenseEvent extends ExpenseEntryEvent {
   @override
   List<Object> get props => [expense];
 }
+
+class ReturnBackEvent extends ExpenseEntryEvent {
+  const ReturnBackEvent();
+
+  @override
+  List<Object> get props => [];
+}
