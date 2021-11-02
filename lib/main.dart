@@ -1,5 +1,5 @@
 import 'package:budget_planner2/data/injection/injection_module.dart';
-import 'package:budget_planner2/ui/pages/main_parent_page.dart';
+import 'package:budget_planner2/ui/pages/main/main_parent_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 

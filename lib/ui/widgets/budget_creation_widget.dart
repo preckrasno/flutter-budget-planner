@@ -1,25 +1,37 @@
 import 'package:budget_planner2/data/models/budget_model.dart';
 import 'package:flutter/material.dart';
 
-class SelectDateSumWidget extends StatelessWidget {
-  SelectDateSumWidget({
+class BudgetCreationWidget extends StatelessWidget {
+  BudgetCreationWidget({
     required this.onSubmit,
     required this.totalSumController,
     Key? key,
   }) : super(key: key);
 
   final TextEditingController totalSumController;
-  final Function(BudgetModel) onSubmit;
+  final void Function(BudgetModel) onSubmit;
   final DateTime todayDate = DateTime.now();
-  DateTime? pickedDate;
+  DateTime? pickedEndDate;
+  DateTime? pickedStartDate;
 
-  _selectDate(BuildContext context) async {
-    pickedDate = await showDatePicker(
+  _selectEndDate(BuildContext context) async {
+    pickedEndDate = await showDatePicker(
       context: context,
       initialDate: todayDate,
       firstDate: todayDate,
-      lastDate: DateTime(2025),
+      lastDate: DateTime(2023),
     );
+  }
+
+  _getBudget(DateTime? endDate, String? totalSum) {
+    if (endDate != null && totalSum != null) {
+      BudgetModel budget = BudgetModel(
+        initialBudgetSum: int.parse(totalSum),
+        budgetEndDate: endDate,
+        expensesList: [],
+      );
+      onSubmit(budget);
+    }
   }
 
   @override
@@ -28,19 +40,14 @@ class SelectDateSumWidget extends StatelessWidget {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () => _selectDate(context),
-                child: Text('Select end date'),
-              ),
-            ],
+          ElevatedButton(
+            onPressed: () => _selectEndDate(context),
+            child: const Text('Select End Date'),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(
+              SizedBox(
                 width: 150,
                 child: TextField(
                   keyboardType: TextInputType.number,
@@ -48,11 +55,11 @@ class SelectDateSumWidget extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
-                onPressed: () => onSubmit(BudgetModel(
-                  endDate: pickedDate!,
-                  totalSum: int.parse(totalSumController.text),
-                )),
-                child: Text('Submit'),
+                onPressed: () => _getBudget(
+                  pickedEndDate,
+                  totalSumController.text,
+                ),
+                child: const Text('Submit'),
               ),
             ],
           ),
