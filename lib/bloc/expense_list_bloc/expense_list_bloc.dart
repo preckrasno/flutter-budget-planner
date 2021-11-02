@@ -14,6 +14,7 @@ class ExpenseListBloc extends Bloc<ExpenseListEvent, ExpenseListState> {
       : super(ExpenseListInitial()) {
     on<LoadingEvent>(_onLoadingEvent);
     on<RemoveExpenseEvent>(_onRemoveExpenseEvent);
+    on<BackButtonPressedEvent>(_onBackButtonPressedEvent);
   }
 
   _onLoadingEvent(LoadingEvent event, Emitter<ExpenseListState> emit) async {
@@ -30,5 +31,10 @@ class ExpenseListBloc extends Bloc<ExpenseListEvent, ExpenseListState> {
 
     await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel!);
     emit(LoadedState(budgetModel!));
+  }
+
+  _onBackButtonPressedEvent(
+      BackButtonPressedEvent event, Emitter<ExpenseListState> emit) async {
+    emit(const ReturnBackFromExpenseListState());
   }
 }

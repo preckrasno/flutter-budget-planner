@@ -17,7 +17,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<LoadingEvent>(_onLoadingEvent);
     on<EndDatePickedEvent>(_onEndDatePickedEvent);
     on<ExpenseEntryEvent>(_onExpenseEntryEvent);
-    on<ExpenseListEvent>(_onExpenseListEvent);
+    on<ExpenseListOpenEvent>(_onExpenseListOpenEvent);
     on<TotalSumEnteredEvent>(_onTotalSumEnteredEvent);
   }
 
@@ -53,8 +53,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     add(const LoadingEvent());
   }
 
-  void _onExpenseListEvent(ExpenseListEvent event, Emitter<HomeState> emit) {
+  void _onExpenseListOpenEvent(
+      ExpenseListOpenEvent event, Emitter<HomeState> emit) {
     emit(const OpenExpenseListState());
-    add(const LoadingEvent());
   }
 }

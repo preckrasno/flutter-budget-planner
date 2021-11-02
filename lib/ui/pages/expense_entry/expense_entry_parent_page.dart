@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_simple_dependency_injection/injector.dart';
 
-//TODO complete expense entry logic and UI
 class ExpenseEntryParentPage extends StatelessWidget {
   const ExpenseEntryParentPage(this.budget, {Key? key}) : super(key: key);
 

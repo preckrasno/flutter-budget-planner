@@ -66,7 +66,7 @@ class HomePage extends StatelessWidget {
   }
 
   _openExpenseList(HomeBloc bloc) {
-    bloc.add(ExpenseListEvent());
+    bloc.add(ExpenseListOpenEvent());
   }
 
   _enteredTotalSum(

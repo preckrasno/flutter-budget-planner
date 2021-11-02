@@ -35,7 +35,7 @@ class AppNavigation {
   static openExpenseList(BuildContext context) {
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) {
-        return ExpenseListParentPage();
+        return const ExpenseListParentPage();
       }),
     );
   }

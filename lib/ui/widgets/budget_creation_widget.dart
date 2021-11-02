@@ -25,7 +25,7 @@ class BudgetCreationWidget extends StatelessWidget {
 
   _getBudget(DateTime? endDate, String? totalSum) {
     if (endDate != null && totalSum != null) {
-      var budget = BudgetModel(
+      BudgetModel budget = BudgetModel(
         initialBudgetSum: int.parse(totalSum),
         budgetEndDate: endDate,
         expensesList: [],

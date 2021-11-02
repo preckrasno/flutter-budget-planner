@@ -16,3 +16,7 @@ class LoadedState extends ExpenseListState {
   @override
   List<Object> get props => [budget];
 }
+
+class ReturnBackFromExpenseListState extends ExpenseListState {
+  const ReturnBackFromExpenseListState();
+}

@@ -19,3 +19,7 @@ class RemoveExpenseEvent extends ExpenseListEvent {
   @override
   List<Object> get props => [expenseId];
 }
+
+class BackButtonPressedEvent extends ExpenseListEvent {
+  const BackButtonPressedEvent();
+}
