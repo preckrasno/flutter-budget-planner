@@ -8,6 +8,7 @@ class ExpenseListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ExpenseListBloc expenseListBloc = context.read<ExpenseListBloc>();
     return BlocBuilder<ExpenseListBloc, ExpenseListState>(
       builder: (context, state) {
         if (state is ExpenseListInitial) {
@@ -16,10 +17,17 @@ class ExpenseListPage extends StatelessWidget {
           );
         }
         if (state is LoadedState) {
-          return ExpenseListWidget(budget: state.budget);
+          return ExpenseListWidget(
+            budget: state.budget,
+            onDelete: (id) => _deletePressed(expenseListBloc, id),
+          );
         }
         throw ArgumentError('$state is unhandled');
       },
     );
+  }
+
+  _deletePressed(ExpenseListBloc bloc, id) {
+    bloc.add(RemoveExpenseEvent(id));
   }
 }

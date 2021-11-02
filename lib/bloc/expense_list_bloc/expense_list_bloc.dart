@@ -13,6 +13,7 @@ class ExpenseListBloc extends Bloc<ExpenseListEvent, ExpenseListState> {
   ExpenseListBloc(this._budgetRepositoryImplementation)
       : super(ExpenseListInitial()) {
     on<LoadingEvent>(_onLoadingEvent);
+    on<RemoveExpenseEvent>(_onRemoveExpenseEvent);
   }
 
   _onLoadingEvent(LoadingEvent event, Emitter<ExpenseListState> emit) async {
@@ -20,17 +21,14 @@ class ExpenseListBloc extends Bloc<ExpenseListEvent, ExpenseListState> {
     emit(LoadedState(budgetModel!));
   }
 
-//WIP rewrite to delete the expense from budget
-  // _onBudgetSubmitEvent(
-  //     RemoveExpenseEvent event, Emitter<ExpenseListState> emit) async {
-  //   BudgetModel? budgetModel =
-  //       await _budgetRepositoryImplementation.getItemsFromStorage();
-  //   if (budgetModel != null) {
-  //     budgetModel.expensesList.add(event.expense);
-  //     await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel);
-  //     emit(const ExpenseAddedState());
-  //   } else {
-  //     emit(const UnInitializedBudgetState());
-  //   }
-  // }
+  _onRemoveExpenseEvent(
+      RemoveExpenseEvent event, Emitter<ExpenseListState> emit) async {
+    budgetModel = await _budgetRepositoryImplementation.getItemsFromStorage();
+
+    budgetModel!.expensesList
+        .removeWhere((element) => element.id == event.expenseId);
+
+    await _budgetRepositoryImplementation.saveItemsToStorage(budgetModel!);
+    emit(LoadedState(budgetModel!));
+  }
 }

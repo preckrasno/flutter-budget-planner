@@ -3,7 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ExpenseListWidget extends StatelessWidget {
-  ExpenseListWidget({required this.budget, Key? key}) : super(key: key);
+  ExpenseListWidget({
+    required this.budget,
+    required this.onDelete,
+    Key? key,
+  }) : super(key: key);
+
+  final Function(String) onDelete;
   BudgetModel budget;
 
   List<Widget> _getExpenseList() {
@@ -11,10 +17,19 @@ class ExpenseListWidget extends StatelessWidget {
     for (var expense in budget.expensesList) {
       String formattedDate =
           DateFormat('yyyy-MM-dd').format(expense.expenseDate);
-      expenseList.add(Text(
-          'Amount: ${expense.expenseSum} Date: $formattedDate id: ${expense.id.substring(0, 4)}'));
+      expenseList.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+                'Amount: ${expense.expenseSum} Date: $formattedDate id: ${expense.id.substring(0, 4)}'),
+            IconButton(
+                onPressed: () => onDelete(expense.id),
+                icon: const Icon(Icons.delete))
+          ],
+        ),
+      );
     }
-    print(expenseList);
     return expenseList;
   }
 

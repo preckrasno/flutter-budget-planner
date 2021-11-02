@@ -7,7 +7,7 @@ class ExpenseModel extends Equatable {
   late final String id;
 
   static const uuid = Uuid();
-  final uuidV4 = uuid.v4();
+  final _uuidV4 = uuid.v4();
 
   ExpenseModel({
     required this.expenseDate,
@@ -15,7 +15,7 @@ class ExpenseModel extends Equatable {
     id,
   }) {
     if (id == null) {
-      this.id = uuidV4;
+      this.id = _uuidV4;
     } else {
       this.id = id;
     }
@@ -25,6 +25,7 @@ class ExpenseModel extends Equatable {
     return {
       'spentSum': expenseSum,
       'spentDate': expenseDate.toString(),
+      'id': id,
     };
   }
 
