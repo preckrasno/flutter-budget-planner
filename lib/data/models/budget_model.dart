@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:budget_planner2/data/date_time_extensions.dart';
 import 'package:budget_planner2/data/models/expense_model.dart';
 import 'package:equatable/equatable.dart';
 
@@ -15,11 +16,14 @@ class BudgetModel extends Equatable {
   });
 
   getCalculatedBudget() {
-    int totalExpenses = 0;
-    for (ExpenseModel expense in expensesList) {
-      totalExpenses += expense.expenseSum;
+    int expensesInOtherDays = 0;
+    DateTime today = DateTime.now();
+    var expensesFromNotToday =
+        expensesList.where((expense) => !expense.expenseDate.isSameDate(today));
+    for (ExpenseModel expense in expensesFromNotToday) {
+      expensesInOtherDays += expense.expenseSum;
     }
-    return initialBudgetSum - totalExpenses;
+    return initialBudgetSum - expensesInOtherDays;
   }
 
   // Return number of days from today till the end of the budget
